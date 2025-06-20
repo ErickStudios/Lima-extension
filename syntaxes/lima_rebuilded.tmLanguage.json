@@ -1,0 +1,353 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "Lima",
+	"editor.tokenColorCustomizations": {
+		"textMateRules": [
+			{
+				"scope": "keyword.control.blue.lima_rebuilded",
+				"settings": {
+					"foreground": "#0000FF"
+				}
+			}
+		]
+	},
+	"patterns": [
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#strings"
+		},
+		{
+			"include": "#includer"
+		},
+		{
+			"include": "#numbers"
+		},
+		{
+			"include": "#keywords_blue"
+		},
+		{
+			"include": "#comments"
+		},
+		{
+			"include": "#vars"
+		},
+		{
+			"include": "#functions"
+		},
+		{
+			"include": "#typese"
+		},
+		{
+			"include": "#structure_highlight"
+		},
+		{
+			"include": "#macros"
+		},
+		{
+			"include": "#propieties"
+		},
+		{
+			"include": "#others"
+		},
+		{
+			"include": "#misc"
+		},
+		{
+			"include": "#documentations"
+		},
+		{
+			"include": "#default"
+		}
+	],
+	"repository": {
+		"keywords": {
+			"patterns": [{
+				"name": "keyword.control.lima_rebuilded",
+				"match": "\\b(if|pass|stc|__stop__|__endprog__|clc|jump|jt|jf|ReadLine|ReadKey|ReadKeyWait)\\b"
+			}]
+		},
+		"macros": {
+			"patterns": [{
+				"name": "constant",
+				"match": "\\b(COMPILER_TYPE|NULL|null_ptr|)\\b"
+			}]
+		},
+		"keywords_blue": {
+        	"patterns": [{
+           		"name": "constant.language",
+            	"match": "\\b(mov|collection|info|endop|operator|value1|value2|value|message|__lima_syntax|popcode|endmsg|externtype|popback|typedef|pragma|section|var|sendmw|import|structure|prototype|int|bool|void|char|ustruct|use_struct)\\b"
+        	}]
+    	},
+		"functions": {
+        	"patterns": [
+			{
+           		"name": "variable",
+            	"match": "echo "
+        	},
+			{
+           		"name": "constant.language",
+            	"match": "expand "
+        	},
+			{
+           		"name": "constant.language",
+            	"match": "typeof "
+        	},
+			{
+           		"name": "constant.language",
+            	"match": "proto "
+        	},
+			{
+           		"name": "constant.language",
+            	"match": "declare "
+        	},
+			{
+           		"name": "constant.language",
+            	"match": "function "
+        	},
+			{
+           		"name": "constant.language",
+            	"match": "module "
+        	},
+			{
+           		"name": "constant.language",
+            	"match": "extensible "
+        	},
+			{
+           		"name": "constant.language",
+            	"match": "mob "
+        	},
+			{
+           		"name": "constant.language",
+            	"match": "using "
+        	},
+			{
+           		"name": "constant.language",
+            	"match": "get "
+        	},
+			{
+           		"name": "constant.language",
+            	"match": "enum "
+        	},
+			{
+           		"name": "variable",
+            	"match": "writel "
+        	},
+			{
+           		"name": "variable",
+            	"match": "NULL "
+        	},
+			{
+           		"name": "variable",
+            	"match": "cls "
+        	}
+		]
+    	},
+		"typese": {
+        	"patterns": [{
+           		"name": "storage.type.cs",
+            	"match": "\\b(u8|define|u16|u32|u64|t8|t16|t32|t64|CHAR16|CHAR8|org|InitSegment|scratch_block|vaiable_set|intersegmental|globalize|EFI_TIME)\\b"
+        	},
+		{
+           		"name": "storage.type.cs",
+            	"match": "@ScratchVar"
+        	},
+			{
+			"name": "storage.type.cs",
+            	"match": "(->)"
+        	},
+					{
+           		"name": "storage.type.cs",
+            	"match": "@eax"
+        	},
+					{
+           		"name": "storage.type.cs",
+            	"match": "@bx"
+        	},
+					{
+           		"name": "storage.type.cs",
+            	"match": "@ax"
+        	},
+			{
+           		"name": "storage.type.cs",
+            	"match": ".cnd"
+        	},
+			{
+           		"name": "storage.type.cs",
+            	"match": "_returned"
+        	},
+			{
+           		"name": "storage.type.cs",
+            	"match": "true"
+        	},
+			{
+           		"name": "storage.type.cs",
+            	"match": "false"
+        	},
+			{
+           		"name": "storage.type.cs",
+            	"match": "text"
+        	},
+			{
+           		"name": "storage.type.cs",
+            	"match": "\\b(any|boolean|text|number)\\b"
+        	}
+		]
+    	},
+		"documentations": {
+			"name": "comment.line",
+			"begin": "/\\*\\*",
+			"end": "\\*\\*/",
+			"patterns": [
+				{
+					"name" : "meta.preprocessor",
+					"match": "@param"
+				}
+			]
+		},
+		"comments": {
+			"name": "comment.line",
+			"begin": "#",
+			"end": "\n",
+			"patterns": [
+				{
+					"name": "constant.character.escape.lima_rebuilded",
+					"match": "\\\\."
+				},
+				{
+					"name": "comment.block.documentation",
+					"begin": "## !",
+					"end": "\n"
+				},
+				{
+					"name" : "storage.type.cs",
+					"match": "@sinpped"
+				}
+			]
+		},
+		"propieties": {
+			"name": "comment.line",
+			"begin": "///!",
+			"end": "\n",
+			"patterns": [
+				{
+					"name" : "storage.type.cs",
+					"match": "!"
+				},
+				{
+					"name" : "storage.type.cs",
+					"match": "using"
+				}
+			]
+		},
+		"vars": {
+			"name": "variable",
+			"begin": "var\n",
+			"end": "\n",
+			"patterns": [
+				{
+					"name": "constant.character.escape.lima_rebuilded",
+					"match": "\\\\."
+				}
+			]
+		},
+		"misc" : {
+			"patterns": [
+				{
+					"name" : "variable" ,
+					"begin": "declare function ",
+					"end": "("
+				}
+			]
+		},
+		"strings": {
+			"name": "string.quoted.double.lima_rebuilded",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [
+				{
+					"name": "constant.character.escape.lima_rebuilded",
+					"match": "\\\\."
+				}
+			]
+		},
+		"includer": {
+			"name": "variable",
+			"begin": "<",
+			"end": ">",
+			"patterns": [
+				{
+					"name": "storage.type.cs",
+					"match": "module"
+				},
+				{
+					"name": "storage.type.cs",
+					"match": "<"
+				},
+				{
+					"name": "storage.type.cs",
+					"match": ">"
+				},
+				{
+					"name": "storage.type.cs",
+					"match": "class"
+				},
+				{
+					"name": "storage.type.cs",
+					"match": "function"
+				},
+				{
+					"name": "storage.type.cs",
+					"match": "children"
+				},
+				{
+					"name": "storage.type.cs",
+					"match": "param"
+				},
+				{
+					"name": "storage.type.cs",
+					"match": "var"
+				},
+				{
+					"name": "constant.language",
+					"match": "__value"
+				},
+				{
+					"name": "constant.language",
+					"match": "instance"
+				},
+				{
+					"name": "constant.language",
+					"match": "new"
+				},
+				{
+					"name": "constant.language",
+					"match": ";"
+				},
+				{
+					"name": "constant.language",
+					"match": "return"
+				},
+				{
+					"name": "storage.type.cs",
+					"match": "_returned"
+				}
+			]
+		},
+		"numbers": {
+			"patterns": [{
+    	    	"name": "constant.numeric.lima_rebuilded",
+     	   		"match": "\\b\\d+(\\.\\d+)?\\b"}]
+   	 },
+		"default" : {
+			"patterns": [
+			{
+           		"name": "meta.preprocessor",
+            	"match": "\\::"
+			}
+			]
+		}
+	},
+	"scopeName": "main.lima"
+}

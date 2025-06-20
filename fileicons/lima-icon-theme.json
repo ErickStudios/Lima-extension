@@ -1,0 +1,15 @@
+{
+  "iconDefinitions": {
+    "file.lima": {
+      "iconPath": "../logo.png"
+    },
+    "file.mkl": {
+      "iconPath": "../logo_makelima.png"
+    }
+  },
+  "fileExtensions": {
+    "lima": "file.lima",
+    "mkl": "file.mkl"
+
+  }
+}

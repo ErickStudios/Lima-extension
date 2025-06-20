@@ -1,0 +1,100 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "makelima",
+	"editor.tokenColorCustomizations": {
+		"textMateRules": [
+			{
+				"scope": "keyword.control.blue.lima_rebuilded",
+				"settings": {
+					"foreground": "#0000FF"
+				}
+			}
+		]
+	},
+	"patterns": [
+
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#functions"
+		},
+		{
+			"include": "#keywords_blue"
+		},
+		{
+			"include": "#vars"
+		},
+		{
+			"include": "#strings"
+		},
+		{
+			"include": "#numbers"
+		},
+		{
+			"include": "#comments"
+		},
+		{
+			"include": "#macros"
+		},
+		{
+			"include": "#structure_highlight"
+		},
+		{
+			"include": "#mt"
+		}
+	],
+	"repository": {
+		"keywords": {
+			"patterns": [{
+				"name": "storage.type.cs",
+				"match": "\\b(each|end|if)\\b"
+			}]
+		},
+		"functions": {
+			"patterns": [{
+				"name": "keyword.control",
+				"match": "\\b(package)\\b"
+			},
+			{
+				"name": "constant.language",
+				"match": "->"
+			}]
+		},
+		"comments": {
+			"name": "comment.line",
+			"begin": "#",
+			"end": "\n",
+			"patterns": [
+				{
+					"name": "constant.character.escape.lima_rebuilded",
+					"match": "\\\\."
+				}
+			]
+		},
+		"keywords_blue": {
+        	"patterns": [{
+           		"name": "constant.language",
+            	"match": "\\b(convert_to|exist|coppy_to)\\b"
+        	}]
+    	},
+		"vars": {
+        	"patterns": [{
+           		"name": "variable",
+            	"match": "\\b(%filename|filename|$file|file)\\b"
+        	}]
+    	},
+		"strings": {
+			"name": "string",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [
+				{
+					"name": "constant.character.escape.lima_rebuilded",
+					"match": "\\\\."
+				}
+			]
+		}
+	},
+	"scopeName": "makelima.mkl"
+}

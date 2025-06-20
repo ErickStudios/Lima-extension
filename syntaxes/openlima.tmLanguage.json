@@ -1,0 +1,64 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "openlima",
+	"editor.tokenColorCustomizations": {
+		"textMateRules": [
+			{
+				"scope": "keyword.control.blue.lima_rebuilded",
+				"settings": {
+					"foreground": "#0000FF"
+				}
+			}
+		]
+	},
+	"patterns": [
+
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#controls"
+		},
+		{
+			"include": "#numbers"
+		},
+		{
+			"include": "#comments"
+		}
+	],
+	"repository": {
+		"keywords": {
+			"patterns": [{
+				"name": "storage.type.cs",
+				"match": "fn "
+			},
+			{
+				"name": "storage.type.cs",
+				"match": "c "
+			}]
+			},
+		"controls": {
+			"patterns": [{
+				"name": "constant.language",
+				"match": "return "
+			},
+		{
+				"name": "storage.type.cs",
+				"match": "end"
+			}
+		]
+			},
+		"numbers": {
+			"patterns": [{
+    	    	"name": "constant.numeric.lima_rebuilded",
+     	   		"match": "\\b\\d+(\\.\\d+)?\\b"}]
+   	 },
+	 		"comments": {
+			"patterns": [{
+    	    	"name": "comment",
+     	   		"begin": "//",
+				"end" : "\n"}]
+   	 }
+	},
+	"scopeName": "main.oli"
+}

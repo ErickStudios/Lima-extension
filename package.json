@@ -1,0 +1,80 @@
+{
+  "name": "ecslimaext454453",
+  "displayName": "Lima/Lima++ extension",
+  "description": "a extension for support the ErickCraftStudios languajes",
+  "version": "0.0.3",
+  "publisher": "ErickCraftStudios",
+  "devDependencies": {
+    "vscode": "^1.85.0"
+  },
+  "engines": {
+    "vscode": "^1.100.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "type": "commonjs",
+  "main": "main.js",
+  "contributes": {
+    "iconThemes": [
+      {
+        "id": "lima-icons",
+        "label": "Lima Icons",
+        "path": "./fileicons/lima-icon-theme.json"
+      }
+    ],
+     "fileTemplates": [
+            {
+                "name": "Class",
+                "filename": "class",
+                "description": "template for lima class",
+                "body": "./sources/templates/MyClass.lima"
+            }
+        ],
+       "debuggers": [
+        {
+            "type": "lima_debug",
+            "request": "launch",
+            "program": "LimaInterpreter/LimaInterpreterbin/Release/netX.0/lima.exe",
+            "configurationAttributes": {
+                "launch": {
+                    "required": ["program"]
+                }
+            }
+        }
+    ],
+    "languages": [{
+      "id": "lima_rebuilded",
+      "aliases": ["Lima", "lima_rebuilded"],
+      "extensions": [".lima"],
+      "configuration": "./language-configuration.json"
+    },
+    {
+      "id": "openlima",
+      "aliases": ["openlima_skale", "lima_mods_oli"],
+      "extensions": [".oli"],
+      "configuration": "./language-configuration.json"
+    },
+  {
+      "id": "makelima",
+      "aliases": ["makelima", "makefile for lima"],
+      "extensions": [".mkl"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "lima_rebuilded",
+      "scopeName": "main.lima",
+      "path": "./syntaxes/lima_rebuilded.tmLanguage.json"
+    },
+    {
+      "language": "openlima",
+      "scopeName": "main.oli",
+      "path": "./syntaxes/openlima.tmLanguage.json"
+    },
+  {
+      "language": "makelima",
+      "scopeName": "makelima.mkl",
+      "path": "./syntaxes/makelima.tmLanguage.json"
+    }]
+  }
+}

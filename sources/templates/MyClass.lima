@@ -1,0 +1,20 @@
+///! ![enable Lima++]
+collection<class MyClass>
+{
+    /**
+    this need to called manually by
+
+    NULL collection<instance;class?MyClass;MyClass_lib;init>(->)<...params...>
+    **/
+    collection<function init>
+    (
+    )
+    /**
+    code ...
+    **/
+    collection<end function>
+}
+
+collection<new class?MyClass MyClass_lib>
+=
+NULL
