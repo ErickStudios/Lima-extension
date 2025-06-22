@@ -247,13 +247,15 @@ async function activate(context) {
     var snipped_count = 9999999999;
 
     //
-    // hoverProvider
+    // harotooltip
     //
-    // represents the documentation tool
+    // represents the haro tooltip from the odd MK Code Studio ide but better and with support for
+    // Lima++
     //
-    const hoverProvider = vscode.languages.registerHoverProvider("lima_rebuilded", {
+    const harotooltip = await vscode.languages.registerHoverProvider("lima_rebuilded", {
         // providing tool
-        provideHover(document, position) {
+        async provideHover(document, position) {
+
             //
             // declare vars
             //
@@ -286,17 +288,17 @@ async function activate(context) {
 
             // the comander action
             if (word === "eax") {
-                return new vscode.Hover("represents the command to send to the interpreter and be process by that");
+                return new vscode.Hover("``@eax`` represents the command to send to the interpreter and be process by that");
             }
 
             // the status of the operation
             if (word === "ax") {
-                return new vscode.Hover("represents the status of the system call");
+                return new vscode.Hover("``@ax`` represents the status of the system call");
             }
 
             // the data to send
             if (word === "bx") {
-                return new vscode.Hover("represemts the data to send to the interpreter");
+                return new vscode.Hover("```@bx`` represemts the data to send to the interpreter");
             }
 
             //
@@ -305,7 +307,7 @@ async function activate(context) {
 
             // the comparator/conditional variable
             if (word === "cnd") {
-                return new vscode.Hover("represents the conditional variable to jt and jf jump instructions");
+                return new vscode.Hover("``.cnd`` represents the conditional variable to jt and jf jump instructions");
             }
 
             // the returned value of a operation
@@ -321,26 +323,6 @@ async function activate(context) {
             if (word === "%^\"!p\"") {
                 return new vscode.Hover("represents a interpreter call");
             }
-
-            return null;
-        }
-    });
-
-    //
-    // harotooltip
-    //
-    // represents the haro tooltip from the odd MK Code Studio ide but better and with support for
-    // Lima++
-    //
-    const harotooltip = await vscode.languages.registerHoverProvider("lima_rebuilded", {
-        // providing tool
-        async provideHover(document, position) {
-            //
-            // declare vars
-            //
-
-            const wordRange = document.getWordRangeAtPosition(position);
-            const word = document.getText(wordRange);
 
             // 
             // get the documment solved
@@ -364,9 +346,9 @@ async function activate(context) {
 
             for (let index = 0; index < rt_doc.length; index++) {
 
-                const element = rt_doc[index].trim();
-                const element2 = rt_doc[index + 1].trim();
-                const element3 = rt_doc[index + 2].trim();
+                let element = rt_doc[index].trim();
+                let element2 = rt_doc[index + 1].trim();
+                let element3 = rt_doc[index + 2].trim();
 
                 if (
                     rt_doc[index].trim().startsWith("# module_start:")
@@ -392,7 +374,7 @@ async function activate(context) {
                 )
                 {
                     if (
-                        element2 == word
+                        element2 === word
                     )
                     {
                         return new vscode.Hover("(**structure instance**) " + word + "\n\rof the structure: " + element3 + "\n\rlocated in module:" ,module_check);
@@ -605,12 +587,33 @@ async function activate(context) {
                     //
                     let className = lineText.substring(17, lineText.length - 1);
                     
+                    var class_documentation = "";
+
+                    if (
+                        rt_doc[i - 1].trim() == "**/"
+                    )
+                    {
+                        let PopIndex = i;
+
+                        i -= 2;
+
+                        while (rt_doc[i].trim() != "/**")
+                        {
+                            class_documentation = rt_doc[i].trim().replaceAll("*","") + "\n\r" + class_documentation
+                            i--;
+                        }
+
+                        i = PopIndex;
+
+                        class_documentation = "" + class_documentation + ""
+                    }
+
                     //
                     // create the completion item
                     //
                     let completion = new vscode.CompletionItem(className, vscode.CompletionItemKind.Class);
                     completion.insertText = new vscode.SnippetString(className);
-                    completion.documentation = new vscode.MarkdownString("Lima++: class " + className);
+                    completion.documentation = new vscode.MarkdownString((class_documentation == "" ? ("Lima++: class " + className) : "") + class_documentation);
 
                     //
                     // the class check
@@ -728,6 +731,27 @@ async function activate(context) {
                 {
                     in_msg = true;
 
+                    var class_documentation = "";
+
+                    if (
+                        rt_doc[i - 2].trim() == "**/"
+                    )
+                    {
+                        let PopIndex = i;
+
+                        i -= 3;
+
+                        while (rt_doc[i].trim() != "/**")
+                        {
+                            class_documentation = rt_doc[i].trim().replaceAll("*","") + "\n\r" + class_documentation
+                            i--;
+                        }
+
+                        i = PopIndex;
+
+                        class_documentation = "" + class_documentation + ""
+                    }
+
                     //
                     // get the name
                     //
@@ -738,7 +762,7 @@ async function activate(context) {
                     //
                     let completion = new vscode.CompletionItem(sectionName, vscode.CompletionItemKind.Function);
                     completion.insertText = new vscode.SnippetString("sendmw "+ sectionName);
-                    completion.documentation = new vscode.MarkdownString("Lima: message " + sectionName + "\n\r(autocomplete to insert a call to the message)");
+                    completion.documentation = new vscode.MarkdownString(( class_documentation == "" ?("Lima: message " + sectionName) : "") + class_documentation + "\n\r(autocomplete to insert a call to the message)");
 
                     //
                     // aline the text
@@ -968,12 +992,33 @@ async function activate(context) {
                     //
                     let varName = rt_doc[i +1].trim();
                     
+                    var class_documentation = "";
+                    
+                    if (
+                        rt_doc[i - 1].trim() == "**/"
+                    )
+                    {
+                        let PopIndex = i;
+
+                        i -= 2;
+
+                        while (rt_doc[i].trim() != "/**")
+                        {
+                            class_documentation = rt_doc[i].trim().replaceAll("*","") + "\n\r" + class_documentation
+                            i--;
+                        }
+
+                        i = PopIndex;
+
+                        class_documentation = "" + class_documentation + ""
+                    }
+
                     //
                     // create the completion item
                     //
                     let completion = new vscode.CompletionItem(varName, vscode.CompletionItemKind.Variable);
                     completion.insertText = new vscode.SnippetString(varName);
-                    completion.documentation = new vscode.MarkdownString("Lima: variable " + varName);
+                    completion.documentation = new vscode.MarkdownString((class_documentation == "" ? ("Lima: variable " + varName) : "") + class_documentation);
 
                     //
                     // aling the text
@@ -1096,14 +1141,36 @@ async function activate(context) {
                             if (
                                 element.trim() == "var"
                             ) {
+                            
+                                var class_documentation = "";
                                 
+                                if (
+                                    amr[index2 - 3].trim() == "**/"
+                                )
+                                {
+                                    let PopIndex = index2;
+
+                                    index2 -= 4;
+
+                                    while (amr[index2].trim() != "/**")
+                                    {
+                                        class_documentation = amr[index2].trim().replaceAll("*","") + "\n\r" + class_documentation
+                                        index2--;
+                                    }
+
+                                    index2 = PopIndex;
+
+                                    class_documentation = "" + class_documentation + ""
+                                }
+
                                 let membName = amr[index2 + 1].trim()
+
                                 //
                                 // create the completion item
                                 //
                                 let completiona = new vscode.CompletionItem(membName, vscode.CompletionItemKind.Field);
                                 completiona.insertText = new vscode.SnippetString(membName);
-                                completiona.documentation = new vscode.MarkdownString("Lima: struct member '" + membName + "' of the instance '" + varName+ "' of the struct '" +struct_name + "'" );
+                                completiona.documentation = new vscode.MarkdownString(( class_documentation == "" ? ("Lima: struct member '" + membName + "' of the instance '" + varName+ "' of the struct '" +struct_name + "'" ) : "") + class_documentation);
 
                                 //
                                 // aling the text
@@ -1190,12 +1257,33 @@ async function activate(context) {
 
                     let varName = split[1];
 
+                    var class_documentation = "";
+
+                    if (
+                        rt_doc[i - 1].trim() == "**/"
+                    )
+                    {
+                        let PopIndex = i;
+
+                        i -= 2;
+
+                        while (rt_doc[i].trim() != "/**")
+                        {
+                            class_documentation = rt_doc[i].trim().replaceAll("*","") + "\n\r" + class_documentation
+                            i--;
+                        }
+
+                        i = PopIndex;
+
+                        class_documentation = "" + class_documentation + ""
+                    }
+
                     //
                     // create the completion item
                     //
                     let completion = new vscode.CompletionItem(varName, vscode.CompletionItemKind.Variable);
                     completion.insertText = new vscode.SnippetString(varName);
-                    completion.documentation = new vscode.MarkdownString("Lima++: instance " + varName + " of the class '" + split[0] + "'");
+                    completion.documentation = new vscode.MarkdownString(( class_documentation == "" ? ("Lima++: instance " + varName + " of the class '" + split[0] + "'") : "") + class_documentation);
 
                     //
                     // aling the text
@@ -1271,6 +1359,7 @@ async function activate(context) {
                             {
                                 let emr = element.trim().substring(20, element.trim().length - 1)
 
+                                
                                 let params = "<";
 
                                 aa += 2;
@@ -1380,12 +1469,34 @@ async function activate(context) {
                             {
                                 let emr = element.trim().substring(12, element.trim().indexOf(">"))
 
+                                            
+                                var class_documentation = "";
+
+                                if (
+                                    class_body_arr[aa - 1].trim() == "**/"
+                                )
+                                {
+                                    let PopIndex = aa;
+
+                                    aa -= 2;
+
+                                    while (class_body_arr[aa].trim() != "/**")
+                                    {
+                                        class_documentation = class_body_arr[aa].trim().replaceAll("*","") + "\n\r" + class_documentation
+                                        aa--;
+                                    }
+
+                                    aa = PopIndex;
+
+                                    class_documentation = "" + class_documentation + ""
+                                }
+
                                 //
                                 // create the completion item
                                 //
                                 let completiona = new vscode.CompletionItem(emr, vscode.CompletionItemKind.Field);
                                 completiona.insertText = new vscode.SnippetString(emr);
-                                completiona.documentation = new vscode.MarkdownString("Lima++: field '" + emr + "' of the class '" + split[0] + "'" );
+                                completiona.documentation = new vscode.MarkdownString((class_documentation == "" ? ("Lima++: field '" + emr + "' of the class '" + split[0] + "'" ) : "") + class_documentation);
 
                                 //
                                 // aling the text

@@ -282,8 +282,9 @@
 					"match": "module"
 				},
 				{
-					"name": "storage.type.cs",
-					"match": "<"
+					"name": "constant.numeric",
+					"begin": "<",
+					"end" : ">"
 				},
 				{
 					"name": "storage.type.cs",
